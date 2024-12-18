@@ -1,0 +1,11 @@
+﻿
+
+@if(TempData[StaticAlertMessage.SUCCESS] != null)
+{
+    <p style="background: green; padding: 1rem; color: white; margin-block-start: 2rem;">@TempData[StaticAlertMessage.SUCCESS]</p>
+}
+
+@if (TempData[StaticAlertMessage.ERROR] != null)
+{
+    <p style="background: red; padding: 1rem; color: white; margin-block-start: 2rem;">@TempData[StaticAlertMessage.ERROR]</p>
+}

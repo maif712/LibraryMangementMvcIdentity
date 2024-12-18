@@ -1,0 +1,36 @@
+﻿
+@model List<Book>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<partial name="_ShowMessage"></partial>
+
+<div class="layout-wrapper">
+    <div class="cards-wrapper">
+
+        @foreach (var book in Model)
+        {
+            <div style="--status-bg-color: @(book.Status == StaticStatus.AVAILABLE ? "#b0e73b" : book.Status == StaticStatus.PENDING ? "#f2b535" : "#be539a")" class="card" data-book-status="@book.Status">
+                <div>
+                    <h2 class="card__title">@book.Title</h2>
+                    <span class="card__author">@book.Author</span>
+                    <p class="card__description">
+                        @book.Description
+                    </p>
+                </div>
+                @if(book.Status == StaticStatus.AVAILABLE)
+                {
+                    <div class="card__btn-wrapper">
+                        <form method="post" asp-controller="User" asp-action="AddRequest" asp-route-id="@book.Id">
+                            <button class="card__request-btn" type="submit">send reqeust</button>
+                        </form>
+                    </div>
+                }
+            </div>
+        }
+       
+    </div>
+</div>
+

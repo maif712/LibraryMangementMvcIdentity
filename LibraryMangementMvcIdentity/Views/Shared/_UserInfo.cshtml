@@ -1,0 +1,7 @@
+﻿@model AppUser
+
+<div class="user_info__wrapper">
+    <p class="user_info__p">Email: <span>@Model.Email</span></p>
+    <p class="user_info__p">Username: <span>@Model.UserName</span></p>
+    <p class="user_info__p">Total Request(s): <span>@(Model.Requests != null ? Model.Requests.Count() : "No reqeust!")</span></p>
+</div>

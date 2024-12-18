@@ -1,0 +1,58 @@
+﻿@model IEnumerable<LibraryMangementMvcIdentity.Models.Entities.Request>
+
+@{
+    ViewData["Title"] = "Requests";
+    var userInfo = ViewBag.UserInfo;
+}
+
+<h1>Request(s)</h1>
+
+<partial name="_UserInfo" model="userInfo"></partial>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Book title
+            </th>
+            <th>
+                Book author
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.Book?.Title
+            </td>
+                <td>
+                    @item.Book?.Author
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDate)
+            </td>
+                @if(item.RequestStatus == StaticStatus.PENDING)
+                {
+                    <td>
+                        <form method="post" asp-controller="User" asp-action="UserDelete">
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <input type="hidden" name="bId" value="@item.BookId" />
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                    </td>
+                }
+            </tr>
+}
+    </tbody>
+</table>

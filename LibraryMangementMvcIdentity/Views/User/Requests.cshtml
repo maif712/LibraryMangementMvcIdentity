@@ -1,0 +1,73 @@
+﻿@model IEnumerable<LibraryMangementMvcIdentity.Models.Entities.Request>
+
+@{
+    ViewData["Title"] = "All Requests";
+}
+
+<partial name="_ShowMessage"></partial>
+
+<h1>All request(s)</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Book title
+            </th>
+            <th>
+                Book author
+            </th>
+            <th>
+                User name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Book?.Title
+                </td>
+                <td>
+                    @item.Book?.Author
+                </td>
+                <td>
+                    @item.AppUser?.UserName
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestDate)
+                </td>
+                <td style="display: flex; gap: 1rem;">
+                    <form method="post" asp-controller="User" asp-action="Delete">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="hidden" name="bId" value="@item.BookId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                    @if(item.RequestStatus == StaticStatus.PENDING)
+                    {
+                        <form method="post" asp-controller="User" asp-action="Confirm">
+                            <input type="hidden" name="rId" value="@item.Id" />
+                            <input type="hidden" name="bId" value="@item.BookId" />
+                            <button type="submit" class="btn btn-success">Confirm</button>
+                        </form>
+                        <form method="post" asp-controller="User" asp-action="Reject">
+                            <input type="hidden" name="rId" value="@item.Id" />
+                            <input type="hidden" name="bId" value="@item.BookId" />
+                            <button type="submit" class="btn btn-warning">Reject</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
